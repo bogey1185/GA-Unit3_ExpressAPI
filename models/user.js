@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema({
     }, 
     narrative: String, 
     followedPets: [Animal.schema]
-  }
+  },
+  shelter: Boolean
 })
 
 const User = mongoose.model('User', userSchema);

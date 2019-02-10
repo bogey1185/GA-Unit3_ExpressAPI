@@ -11,12 +11,11 @@ const animalSchema = new mongoose.Schema({
   size: String,
   narrative: String,
   imageURL: [String],
-  shelter: [Shelter.schema]
-  social: {
-    likes: Number,
-    follows: Number,
-    shares: Number
-  }
+  shelter: [Shelter.schema],
+  likes: Number,
+  follows: Number,
+  shares: Number
+
 });
 
 
