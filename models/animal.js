@@ -3,6 +3,7 @@ const Shelter    = require('./shelter.js');
 
 const animalSchema = new mongoose.Schema({
   name: String,
+  species: String,
   age: Number,
   breed: String,
   color: String,
