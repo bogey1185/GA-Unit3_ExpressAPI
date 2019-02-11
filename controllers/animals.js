@@ -3,7 +3,7 @@ const router    = express.Router();
 const Animal    = require('../models/animal.js');
 const request   = require('superagent');
 
-router.get('/', async (req, res, next) => {
+router.get('/seed', async (req, res, next) => {
   try {
     console.log('working');
     await request
@@ -12,9 +12,9 @@ router.get('/', async (req, res, next) => {
       console.log(data.text);
       const parsedData = JSON.parse(data.text)
       console.log(parsedData);
-      // console.log(pretty, 'THIS IS PRETTY');
-      // res.json(pretty)
+      res.json(parsedData)
     })
+
         
   } catch (err) {
     console.log(err);
