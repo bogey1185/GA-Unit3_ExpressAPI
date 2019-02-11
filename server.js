@@ -7,6 +7,8 @@ const app             = express();
 const session         = require('express-session');
 const bodyParser      = require('body-parser');
 const passString      = require('./extra_express/pass.js');
+const animalController  = require('./controllers/animals.js');
+const userController  = require('./controllers/users.js');
 
 //~~~~~~~~~~~~~~~~~~~~ MIDDLEWARE ~~~~~~~~~~~~~~~~~~~~//
 
@@ -16,6 +18,9 @@ app.use(session({
   saveUninitialized: false
 }));
 app.use(bodyParser.urlencoded({extended: false}));
+
+app.use('/animals', animalController);
+app.use('/users', animalController);
 
 //~~~~~~~~~~~~~~~~~~~~ Main Route ~~~~~~~~~~~~~~~~~~~~//
 

@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
       zip: String
     }, 
     narrative: String, 
-    followedPets: [Animal.schema]
+    // followedPets: [Animal.schema]
   },
   shelter: Boolean
 })

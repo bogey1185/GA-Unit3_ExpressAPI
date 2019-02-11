@@ -1,5 +1,5 @@
 const mongoose  = require('mongoose');
-const Shelter    = require('./shelter.js');
+const User      = require('./user.js');
 
 const animalSchema = new mongoose.Schema({
   name: String,
@@ -11,7 +11,7 @@ const animalSchema = new mongoose.Schema({
   size: String,
   narrative: String,
   imageURL: [String],
-  shelter: [Shelter.schema],
+  shelter: [User.schema],
   likes: Number,
   follows: Number,
   shares: Number
