@@ -1,14 +1,14 @@
 
 //~~~~~~~~~~~~~~~~~~~~ REQUIRES ~~~~~~~~~~~~~~~~~~~~//
 require('./db/db.js')
-const PORT            = process.env.PORT || 3000;
-const express         = require('express');
-const app             = express();
-const session         = require('express-session');
-const bodyParser      = require('body-parser');
-const passString      = require('./extra_express/pass.js');
-const animalController  = require('./controllers/animals.js');
-const userController  = require('./controllers/users.js');
+const PORT                = process.env.PORT || 9000;
+const express             = require('express');
+const app                 = express();
+const session             = require('express-session');
+const bodyParser          = require('body-parser');
+const passString          = require('./extra_express/pass.js');
+const propertyController  = require('./controllers/properties.js');
+const userController    = require('./controllers/users.js');
 
 //~~~~~~~~~~~~~~~~~~~~ MIDDLEWARE ~~~~~~~~~~~~~~~~~~~~//
 
@@ -19,8 +19,8 @@ app.use(session({
 }));
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use('/animals', animalController);
-app.use('/users', animalController);
+app.use('/properties', propertyController);
+app.use('/users', userController);
 
 //~~~~~~~~~~~~~~~~~~~~ Main Route ~~~~~~~~~~~~~~~~~~~~//
 
