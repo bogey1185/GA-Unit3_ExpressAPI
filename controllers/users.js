@@ -1,26 +1,44 @@
 const express   = require('express');
 const router    = express.Router();
+const bcrypt    = require('bcryptjs');
 const Tenant    = require('../models/tenant.js');
 const Landlord  = require('../models/landlord.js');
 
 
-//~~~~~~~~~~~Register Route~~~~~~~~~~~~//
+//~~~~~~~~~~~Register Routes~~~~~~~~~~~~//
 
   //landlord register
 
 router.post('/registerLandlord', async (req, res, next) => {
-  console.log(req.body);
+
   try {
     
-    const createLandlord = await Landlord.create(req.body);
-    console.log(createLandlord);
-    res.json({
-      status: 200,
-      data: 'user created!'
-    })
+    const foundUser = await Landlord.findOne({username: req.body.username});
+
+    if (!foundUser) {
+      const hashedPwd = await bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+      const createdLandlord = await Landlord.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        businessName: req.body.businessName,
+        username: req.body.username,
+        password: hashedPwd,
+        email: req.body.email
+      });
+
+      res.json({
+        status: 200,
+        data: 'user created!'
+      })
+      
+    } else {
+      res.json({
+        status: 418,
+        data: 'username taken!'
+      })
+    }
         
   } catch (err) {
-    console.log(err, 'this is server ERR');
     res.send(err);
   
   }
