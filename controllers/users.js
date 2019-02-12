@@ -7,7 +7,7 @@ const Landlord  = require('../models/landlord.js');
 
 //~~~~~~~~~~~Register Routes~~~~~~~~~~~~//
 
-  //landlord register
+  //new landlord registration
 
 router.post('/registerLandlord', async (req, res, next) => {
 
@@ -25,7 +25,7 @@ router.post('/registerLandlord', async (req, res, next) => {
         password: hashedPwd,
         email: req.body.email
       });
-
+      
       res.json({
         status: 200,
         data: 'user created!'
@@ -44,12 +44,44 @@ router.post('/registerLandlord', async (req, res, next) => {
   }
 })
 
+  //new tenant registration
 
-  //tenant register
+router.post('/registerTenant', async (req, res, next) => {
 
+  try {
+    
+    const foundUser = await Tenant.findOne({username: req.body.username});
 
+    if (!foundUser) {
+      const hashedPwd = await bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+      const createdTenant = await Tenant.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        username: req.body.username,
+        password: hashedPwd,
+        email: req.body.email
+      });
+      
+      res.json({
+        status: 200,
+        data: 'user created!'
+      })
+      
+    } else {
+      res.json({
+        status: 418,
+        data: 'username taken!'
+      })
+    }
+        
+  } catch (err) {
+    res.send(err);
+  
+  }
+})
 
 //login route
+
 
     // be sure to pass this forward if login successful:
 

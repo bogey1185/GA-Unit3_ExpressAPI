@@ -1,4 +1,4 @@
-const mongoose  = require('mongoose');
+ const mongoose  = require('mongoose');
 const Property  = require('./property.js');
 
 const landlordSchema = new mongoose.Schema({
