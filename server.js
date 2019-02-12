@@ -7,8 +7,9 @@ const app                 = express();
 const session             = require('express-session');
 const bodyParser          = require('body-parser');
 const passString          = require('./extra_express/pass.js');
+const cors                = require('cors');
 const propertyController  = require('./controllers/properties.js');
-const userController    = require('./controllers/users.js');
+const userController      = require('./controllers/users.js');
 
 //~~~~~~~~~~~~~~~~~~~~ MIDDLEWARE ~~~~~~~~~~~~~~~~~~~~//
 
@@ -17,10 +18,17 @@ app.use(session({
   resave: false, 
   saveUninitialized: false
 }));
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true, 
+  optionsSuccessStatus: 200 
+}
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use('/properties', propertyController);
-app.use('/users', userController);
+
+app.use('/api/v1/properties', propertyController);
+app.use('/api/v1/users', userController);
 
 //~~~~~~~~~~~~~~~~~~~~ Main Route ~~~~~~~~~~~~~~~~~~~~//
 
