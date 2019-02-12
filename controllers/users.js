@@ -8,14 +8,20 @@ const Landlord  = require('../models/landlord.js');
 
   //landlord register
 
-router.post('/registerLandlord', (req, res, next) => {
+router.post('/registerLandlord', async (req, res, next) => {
   console.log(req.body);
   try {
-    console.log('working');
+    
+    const createLandlord = await Landlord.create(req.body);
+    console.log(createLandlord);
+    res.json({
+      status: 200,
+      data: 'user created!'
+    })
         
   } catch (err) {
-    console.log(err);
-    next(err);
+    console.log(err, 'this is server ERR');
+    res.send(err);
   
   }
 })
