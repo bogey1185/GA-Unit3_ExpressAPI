@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const connectionString = process.env.MONGODB_URI || 'mongodb://localhost/doggo';
+const connectionString = process.env.MONGODB_URI || 'mongodb://localhost/LeaseGuard';
 
 mongoose.connect(connectionString, {
   useNewUrlParser: true,

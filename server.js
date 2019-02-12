@@ -13,18 +13,19 @@ const userController      = require('./controllers/users.js');
 
 //~~~~~~~~~~~~~~~~~~~~ MIDDLEWARE ~~~~~~~~~~~~~~~~~~~~//
 
-app.use(session({
-  secret: passString, 
-  resave: false, 
-  saveUninitialized: false
-}));
 const corsOptions = {
   origin: 'http://localhost:3000',
   credentials: true, 
   optionsSuccessStatus: 200 
 }
 app.use(cors(corsOptions));
+app.use(session({
+  secret: passString, 
+  resave: false, 
+  saveUninitialized: false
+}));
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 
 app.use('/api/v1/properties', propertyController);
