@@ -5,11 +5,11 @@ const Tenant    = require('../models/tenant.js');
 const Landlord  = require('../models/landlord.js');
 
 
-//~~~~~~~~~~~Register Routes~~~~~~~~~~~~//
+//~~~~~~~~~~~Registration Routes~~~~~~~~~~~~//
 
   //new landlord registration
 
-router.post('/registerLandlord', async (req, res, next) => {
+router.post('/registerlandlord', async (req, res, next) => {
 
   try {
     
@@ -28,13 +28,13 @@ router.post('/registerLandlord', async (req, res, next) => {
       
       res.json({
         status: 200,
-        data: 'user created!'
+        sysMsg: 'user created!'
       })
       
     } else {
       res.json({
         status: 418,
-        data: 'username taken!'
+        sysMsg: 'username taken!'
       })
     }
         
@@ -46,7 +46,7 @@ router.post('/registerLandlord', async (req, res, next) => {
 
   //new tenant registration
 
-router.post('/registerTenant', async (req, res, next) => {
+router.post('/registertenant', async (req, res, next) => {
 
   try {
     
@@ -64,13 +64,13 @@ router.post('/registerTenant', async (req, res, next) => {
       
       res.json({
         status: 200,
-        data: 'user created!'
+        sysMsg: 'user created!'
       })
       
     } else {
       res.json({
         status: 418,
-        data: 'username taken!'
+        sysMsg: 'username taken!'
       })
     }
         
@@ -80,7 +80,82 @@ router.post('/registerTenant', async (req, res, next) => {
   }
 })
 
-//login route
+//~~~~~~~~~~~Login Routes~~~~~~~~~~~~//
+
+  //Landlord login
+
+router.post('/loginlandlord', async (req, res, next) => {
+  try {
+
+    //try to find submitted username
+    const foundUser = await Landlord.findOne({username: req.body.username});
+
+    //if user not found
+    if (!foundUser) {
+      res.json({
+        status: 418,
+        sysMsg: 'user not found'
+      })
+    } else {
+      if (bcrypt.compareSync(req.body.password, foundUser.password)) {
+        res.json({
+          status: 200,
+          sysMsg: 'login successful',
+          data: foundUser
+        })
+      } else {
+        re.json({
+          status: 418,
+          sysMsg: 'password incorrect'
+        })
+      }
+    }
+        
+  } catch (err) {
+    console.log(err);
+    res.send(err);
+  
+  }
+})
+
+
+//tenant login
+
+router.post('/logintenant', async (req, res, next) => {
+  try {
+
+    //try to find submitted username
+    const foundUser = await Tenant.findOne({username: req.body.username});
+
+    //if user not found
+    if (!foundUser) {
+      res.json({
+        status: 418,
+        sysMsg: 'user not found'
+      })
+    } else {
+      if (bcrypt.compareSync(req.body.password, foundUser.password)) {
+        res.json({
+          status: 200,
+          sysMsg: 'login successful',
+          data: foundUser
+        })
+      } else {
+        re.json({
+          status: 418,
+          sysMsg: 'password incorrect'
+        })
+      }
+    }
+        
+  } catch (err) {
+    console.log(err);
+    res.send(err);
+  
+  }
+})
+
+
 
 
     // be sure to pass this forward if login successful:
