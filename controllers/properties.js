@@ -4,14 +4,7 @@ const Property  = require('../models/property.js');
 const Landlord  = require('../models/landlord.js');
 const request   = require('superagent');
 const USPS      = require('../extra_express/uspsapikey.js');
-const parser    = require('xml2json')
-
-//create new property
-    //-- address of new property used to auto generate
-    //-- unique address string. this wil be used to ensure
-    //-- multipel people don't try to claim the same address
-    //invite code also created by landlord when property is created
-    //so it can be saved and send to the tenant
+const parser    = require('xml2json');
 
 //~~~~~~~~~~~~~~~~~new property~~~~~~~~~~~~~~~~~//
 
@@ -62,7 +55,7 @@ router.post('/new', async (req, res, next) => {
           
         } else {
           //else, usps api wasn't able to find the address. return
-          //address not found to front end.
+          //address not found to front end to trigger user message.
           res.json({
           status: 418,
           sysMsg: 'Address Not Found'
