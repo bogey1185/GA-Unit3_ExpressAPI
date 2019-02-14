@@ -155,7 +155,27 @@ router.post('/logintenant', async (req, res, next) => {
   }
 })
 
+//~~~~~~~~~~~Update route for landlord delete button~~~~~~~~~~~~//
 
+router.put('/:id', async (req, res, next) => {
+  try {
+    //find landlord who owns the subject property 
+    const foundOwner = await Landlord.findOne({'propertyList._id': req.params.id});   
+    //remove offending property and save change
+    foundOwner.propertyList.id(req.params.id).remove();
+    foundOwner.save();
+    //send code, offender index to front end
+    res.json({
+      status: 200,
+      data: req.params.id
+    })
+
+  } catch (err) {
+    console.log(err);
+    next(err);
+  
+  }
+})
 
 
 
