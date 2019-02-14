@@ -158,15 +158,6 @@ router.post('/logintenant', async (req, res, next) => {
 
 
 
-    // be sure to pass this forward if login successful:
-
-    // res.json({
-    //   status: 200,
-    //   data: 'login successful'
-    // });
-
-
-
 
 
 

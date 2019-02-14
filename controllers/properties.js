@@ -6,9 +6,9 @@ const request   = require('superagent');
 const USPS      = require('../extra_express/uspsapikey.js');
 const parser    = require('xml2json');
 
-//~~~~~~~~~~~~~~~~~new property~~~~~~~~~~~~~~~~~//
+//~~~~~~~~~~~~~~~~~ property create route ~~~~~~~~~~~~~~~~~//
 
-router.post('/new', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
 
     //need to sanitize submitted address through USPS API
@@ -51,14 +51,18 @@ router.post('/new', async (req, res, next) => {
           await foundLandlord.save();
 
           //send the updated landlord back to front end to update display
-          res.json(foundLandlord);
+          res.json({
+            status: 200,
+            property: createdProperty,
+            data: foundLandlord
+          });
           
         } else {
           //else, usps api wasn't able to find the address. return
           //address not found to front end to trigger user message.
           res.json({
-          status: 418,
-          sysMsg: 'Address Not Found'
+            status: 418,
+            sysMsg: 'Address Not Found'
 
           });
         }
@@ -72,8 +76,35 @@ router.post('/new', async (req, res, next) => {
   }
 })
 
+//~~~~~~~~~~~~~~~~~ property update route ~~~~~~~~~~~~~~~~~//
 
+router.put('/:id', async (req, res, next) => {
+  try {
 
+    //find property with proper ID and update it
+    const foundProperty = await Property.findByIdAndUpdate(req.params.id, {propertyCode: req.body[0]}, {new: true});
+
+    //find person who owns the property
+    const foundOwner = await Landlord.findOne({'propertyList._id': req.params.id});
+    
+    //pull old version of property w/o propertyCode OUT, and insert new and save
+    foundOwner.propertyList.id(req.params.id).remove();
+    foundOwner.propertyList.push(foundProperty);
+    foundOwner.save();
+
+    res.json({
+      status: 200,
+      property: foundProperty,
+      data: foundOwner
+    })
+       
+        
+  } catch (err) {
+    console.log(err);
+    next(err);
+  
+  }
+})
 
 
 
