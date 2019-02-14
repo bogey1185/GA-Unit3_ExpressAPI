@@ -14,7 +14,7 @@ const userController      = require('./controllers/users.js');
 //~~~~~~~~~~~~~~~~~~~~ MIDDLEWARE ~~~~~~~~~~~~~~~~~~~~//
 
 const corsOptions = {
-  origin: 'https://leaseguard.herokuapp.com' || 'http://localhost:3000',
+  origin: process.env.CORSPATH,
   credentials: true, 
   optionsSuccessStatus: 200 
 }
