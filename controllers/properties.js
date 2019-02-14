@@ -24,7 +24,6 @@ router.post('/', async (req, res, next) => {
       //and store in uspsResponse
         const convXML2JSON = parser.toJson(data.text);
         const uspsResponse = JSON.parse(convXML2JSON).AddressValidateResponse.Address;
-        
 
         //if the response has a property indicating the usps api
         //found the property successfully, create the property using 
@@ -76,12 +75,37 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+//~~~~~~~~~~~~~~~~~ property get route for show page ~~~~~~~~~~~~~~~~~//
+router.get('/show/:id', async (req, res, next) => {
+  try {
+    const foundProperty = await Property.findOne({'propertyCode': req.params.id});
+
+    //if prop is found, foundProperty will have a truthy value.
+    if (foundProperty) {
+      res.json({
+        status: 200,
+        sysMsg: 'property found',
+        data: foundProperty
+      }) 
+    } else {
+      //if not found, it returns null, which is falsey
+      res.json({
+        status: 418, 
+        sysMsg: 'property not found'
+      })
+    }
+
+  } catch (err) {
+    console.log(err);
+    next(err);
+  
+  }
+})
+
 //~~~~~~~~~~~~~~~~~ property get route ~~~~~~~~~~~~~~~~~//
 router.get('/:id', async (req, res, next) => {
-  console.log(req.params.id, 'REQ PARAMS');
   try {
     const foundProperty = await Property.findById(req.params.id);
-    console.log(foundProperty, 'FOUND PROPERTY');
 
     res.json({
       status: 200,
