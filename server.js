@@ -1,12 +1,12 @@
 
 //~~~~~~~~~~~~~~~~~~~~ REQUIRES ~~~~~~~~~~~~~~~~~~~~//
-require('./db/db.js')
+require('dotenv').config();
+require('./db/db.js');
 const PORT                = process.env.PORT || 9000;
 const express             = require('express');
 const app                 = express();
 const session             = require('express-session');
 const bodyParser          = require('body-parser');
-const passString          = require('./extra_express/pass.js');
 const cors                = require('cors');
 const propertyController  = require('./controllers/properties.js');
 const userController      = require('./controllers/users.js');
@@ -20,7 +20,7 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 app.use(session({
-  secret: passString, 
+  secret: process.env.SESSION_SECRET, 
   resave: false, 
   saveUninitialized: false
 }));

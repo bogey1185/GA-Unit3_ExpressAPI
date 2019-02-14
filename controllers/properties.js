@@ -3,7 +3,6 @@ const router    = express.Router();
 const Property  = require('../models/property.js');
 const Landlord  = require('../models/landlord.js');
 const request   = require('superagent');
-const USPS      = require('../extra_express/uspsapikey.js');
 const parser    = require('xml2json');
 
 //~~~~~~~~~~~~~~~~~ property create route ~~~~~~~~~~~~~~~~~//
@@ -13,7 +12,7 @@ router.post('/', async (req, res, next) => {
 
     //need to sanitize submitted address through USPS API
     //first build API query based on req body
-    const apiQueryString = `http://production.shippingapis.com/ShippingAPITest.dll?API=Verify&XML=<AddressValidateRequest USERID="${USPS}"><Address ID="0"><Address1>${req.body.unit}</Address1><Address2>${req.body.street}</Address2><City>${req.body.city}</City><State>${req.body.state}</State><Zip5>${req.body.zipCode}</Zip5><Zip4></Zip4></Address></AddressValidateRequest>`;
+    const apiQueryString = `http://production.shippingapis.com/ShippingAPITest.dll?API=Verify&XML=<AddressValidateRequest USERID="${process.env.USPSID}"><Address ID="0"><Address1>${req.body.unit}</Address1><Address2>${req.body.street}</Address2><City>${req.body.city}</City><State>${req.body.state}</State><Zip5>${req.body.zipCode}</Zip5><Zip4></Zip4></Address></AddressValidateRequest>`;
     
     //api request to USPS
     request.get(apiQueryString).end(async (err, data) => {
@@ -159,7 +158,7 @@ router.put('/:id/edit', async (req, res, next) => {
     //create 5 digit for query
     const fiveDigitZip = req.body.zipCode.slice(0, 4);
 
-    const apiQueryString = `http://production.shippingapis.com/ShippingAPITest.dll?API=Verify&XML=<AddressValidateRequest USERID="${USPS}"><Address ID="0"><Address1>${req.body.unit}</Address1><Address2>${req.body.street}</Address2><City>${req.body.city}</City><State>${req.body.state}</State><Zip5>${fiveDigitZip}</Zip5><Zip4></Zip4></Address></AddressValidateRequest>`;
+    const apiQueryString = `http://production.shippingapis.com/ShippingAPITest.dll?API=Verify&XML=<AddressValidateRequest USERID="${process.env.USPSID}"><Address ID="0"><Address1>${req.body.unit}</Address1><Address2>${req.body.street}</Address2><City>${req.body.city}</City><State>${req.body.state}</State><Zip5>${fiveDigitZip}</Zip5><Zip4></Zip4></Address></AddressValidateRequest>`;
     
     //api request to USPS
     request.get(apiQueryString).end(async (err, data) => {

@@ -11,6 +11,10 @@
     "type": "git",
     "url": "git+https://github.com/bogey1185/GA-Unit3_ExpressAPI.git"
   },
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "author": "",
   "license": "ISC",
   "bugs": {

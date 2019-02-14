@@ -1,3 +1,4 @@
 pass.js
 node_modules
 uspsapikey.js
+.env
