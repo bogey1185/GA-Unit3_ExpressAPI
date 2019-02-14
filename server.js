@@ -36,7 +36,7 @@ app.use('/api/v1/users', userController);
 app.get('/', (req, res, next) => {
   try {
     
-    res.send('APP IS RUNNING')
+    res.send('SERVER IS RUNNING')
     //****************SET UP SESSION****************//
 
   } catch (err) {
