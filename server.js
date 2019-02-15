@@ -2,14 +2,15 @@
 //~~~~~~~~~~~~~~~~~~~~ REQUIRES ~~~~~~~~~~~~~~~~~~~~//
 require('dotenv').config();
 require('./db/db.js');
-const PORT                = process.env.PORT || 9000;
-const express             = require('express');
-const app                 = express();
-const session             = require('express-session');
-const bodyParser          = require('body-parser');
-const cors                = require('cors');
-const propertyController  = require('./controllers/properties.js');
-const userController      = require('./controllers/users.js');
+const PORT                  = process.env.PORT || 9000;
+const express               = require('express');
+const app                   = express();
+const session               = require('express-session');
+const bodyParser            = require('body-parser');
+const cors                  = require('cors');
+const propertyController    = require('./controllers/properties.js');
+const userController        = require('./controllers/users.js');
+const submissionController  = require('./controllers/submissions.js');
 
 //~~~~~~~~~~~~~~~~~~~~ MIDDLEWARE ~~~~~~~~~~~~~~~~~~~~//
 
@@ -29,6 +30,7 @@ app.use(bodyParser.json());
 
 
 app.use('/api/v1/properties', propertyController);
+app.use('/api/v1/submissions', submissionController);
 app.use('/api/v1/users', userController);
 
 //~~~~~~~~~~~~~~~~~~~~ Main Route ~~~~~~~~~~~~~~~~~~~~//

@@ -1,4 +1,5 @@
 const mongoose  = require('mongoose');
+const Submission = require('./submission.js');
 
 const propertySchema = new mongoose.Schema({
   ownerUsername: String,
@@ -9,15 +10,8 @@ const propertySchema = new mongoose.Schema({
   zipCode: String,
   propertyCode: String,
   readOnly: Boolean,  //this will switch to true once tenant uploads photos. Therefore, can't be changed later.
-  inspectionData: [{
-    imageUrl: {type: String, required: true},
-    text: String,
-    uploadDate: Date
-  }] 
-
+  inspectionData: [Submission.schema] 
 });
-
-
 
 const Property = mongoose.model('Property', propertySchema);
 
