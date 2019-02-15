@@ -1,8 +1,8 @@
-const express   = require('express');
-const router    = express.Router();
-const Submission= require('../models/submission.js');
-const Property  = require('../models/property.js');
-const request   = require('superagent');
+const express     = require('express');
+const router      = express.Router();
+const Submission  = require('../models/submission.js');
+const Property    = require('../models/property.js');
+const request     = require('superagent');
 
 
 //~~~~~~~~~~~~~~~~~ submission create route ~~~~~~~~~~~~~~~~~//
@@ -45,6 +45,33 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+//~~~~~~~~~~~~ submission delete route ~~~~~~~~~~~~//
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+
+    //find property with proper ID and update it
+    const foundSubmission = await Submission.findByIdAndDelete(req.params.id);
+
+    //find property related to the submission
+    const foundProperty = await Property.findOne({'inspectionData._id': req.params.id});
+    
+    //pull old version of property w/o propertyCode OUT, and insert new and save
+    foundProperty.inspectionData.id(req.params.id).remove();
+    foundProperty.save();
+
+    res.json({
+      status: 200,
+      _id: req.params.id
+    })
+       
+        
+  } catch (err) {
+    console.log(err);
+    next(err);
+  
+  }
+})
 
 
 
