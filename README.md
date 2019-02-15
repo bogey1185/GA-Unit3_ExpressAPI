@@ -1,20 +1,15 @@
-# DOGGO (and cats)
+# LeaseGuard
 
-## API endpoints
+## LeaseGuard API 
 
+The LeaseGuard API has three primary endpoints that provide access to all of the database's information. Each of the endpoints should be appended onto the primary server URL.
 
-1. User/auth end points
-  * End point for login/logout authentication 
-  * End point for creating user, as well as editting and accessing user data
+Primary server URL: https://leaseguard-express-server.herokuapp.com/api/v1
 
-2. Animal data end points
-  * End point for creating and adding new animals into DB.
-  * End point for accessing animal model in DB in response to search queries and 
-    show requests.
-  * End point for accessing animal images for general website use.
+Endpoints:
+  * /properties
+  * /submissions
+  * /users
 
-3. Social end points
-  * End points for tracking social data (such as likes, follows, and shares)
+The users endpoint contains specialized pathing for service to the LeaseGuard website. However, the submissions endpoint supports RESTful POST and DELETE requests for the purpose of posting and deleting property user submissions. The properties endpoint is the most robust, supporting many RESTful actions, including GET and POST actions. However, the established routes only support requests that are accompanied with the use of a specified database ID. By design, the routes do not support bulk retreival of data.
 
-4. Shelter info end points
-  * End point for creating and accessing shelter data (for use with geo-related features -- ie. "Find all dogs in your area"). 
